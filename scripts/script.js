@@ -1,6 +1,5 @@
-// const gridSize = 16;
+const createGridButton = document.querySelector("#create-grid");
 
-const createGridButton = document.querySelector("#createGrid");
 createGridButton.addEventListener("click", () => {
   let gridSize = prompt("masukan angka", 16);
   createGrid(gridSize);
@@ -9,16 +8,20 @@ createGridButton.addEventListener("click", () => {
 const container = document.querySelector(".container");
 
 const createGrid = (gridSize) => {
-  container.innerHTML = "";
-  for (let i = 0; i < gridSize * gridSize; i++) {
-    const gridItem = document.createElement("div");
-    gridItem.setAttribute("class", "gridItem");
-    gridItem.style.width = `${500 / gridSize - 2}px`;
-    gridItem.style.height = `${500 / gridSize - 2}px`;
-    container.appendChild(gridItem);
-    gridItem.addEventListener("mouseover", () => {
-      gridItem.style.backgroundColor = randomColor();
-    });
+  if (isNaN(gridSize) || gridSize < 1 || gridSize > 100) {
+    alert("Insert number from 1 to 100");
+  } else {
+    container.innerHTML = "";
+    for (let i = 0; i < gridSize * gridSize; i++) {
+      const gridItem = document.createElement("div");
+      gridItem.setAttribute("class", "grid-item");
+      gridItem.style.width = `${500 / gridSize - 2}px`;
+      gridItem.style.height = `${500 / gridSize - 2}px`;
+      container.appendChild(gridItem);
+      gridItem.addEventListener("mouseover", () => {
+        gridItem.style.backgroundColor = randomColor();
+      });
+    }
   }
 };
 
@@ -31,4 +34,15 @@ const randomColor = () => {
   return color;
 };
 
-// createGrid(8);
+const clearGridButton = document.querySelector("#clear-grid");
+clearGridButton.addEventListener("click", () => {
+  clearGrid();
+});
+const clearGrid = () => {
+  gridItem = document.querySelectorAll(".grid-item");
+  gridItem.forEach((item) => {
+    item.style.backgroundColor = "white";
+  });
+};
+
+createGrid(16);
